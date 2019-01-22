@@ -1,0 +1,6 @@
+app:
+  timeout:
+    duration: 5000
+    graceCount : 10
+server:
+  port: 8181

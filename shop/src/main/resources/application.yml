@@ -1,0 +1,13 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+app:
+  services:
+    pricing:
+      port: 8181
+      url: http://localhost:${app.services.pricing.port}/quote/{id}
