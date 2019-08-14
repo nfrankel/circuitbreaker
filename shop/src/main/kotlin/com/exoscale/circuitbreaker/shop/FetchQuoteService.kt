@@ -2,6 +2,7 @@ package com.exoscale.circuitbreaker.shop
 
 import com.exoscale.circuitbreaker.shop.Origin.Cache
 import com.exoscale.circuitbreaker.shop.Origin.Srv
+import com.hazelcast.core.IMap
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.timelimiter.TimeLimiter
 import io.vavr.control.Try
@@ -11,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Supplier
 
 class FetchQuoteService(private val template: RestTemplate,
-                        private val cache: MutableMap<String, Double?>,
+                        private val cache: IMap<String, Double?>,
                         private val timeLimiter: TimeLimiter,
                         private val circuitBreaker: CircuitBreaker) {
 

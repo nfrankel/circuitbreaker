@@ -1,5 +1,6 @@
 package com.exoscale.circuitbreaker.shop
 
+import com.hazelcast.core.*
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.timelimiter.TimeLimiter
@@ -17,7 +18,7 @@ class ShopApplication {
     fun restTemplate() = RestTemplate()
 
     @Bean
-    fun cache() = mutableMapOf<String, Double?>()
+    fun cache(hazelcast: HazelcastInstance) = hazelcast.getMap<String, Double?>("prices")
 
     @Bean
     fun timeLimiter(): TimeLimiter = TimeLimiter.of(Duration.ofSeconds(2))
@@ -31,7 +32,7 @@ class ShopApplication {
 
     @Bean
     fun service(restTemplate: RestTemplate,
-                cache: MutableMap<String, Double?>,
+                cache: IMap<String, Double?>,
                 timeLimiter: TimeLimiter,
                 circuitBreaker: CircuitBreaker) = FetchQuoteService(restTemplate, cache, timeLimiter, circuitBreaker)
 }
