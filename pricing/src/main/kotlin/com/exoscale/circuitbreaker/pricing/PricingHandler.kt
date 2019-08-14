@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.reactive.function.server.*
 import reactor.core.publisher.Mono
 import java.lang.Thread.sleep
+import kotlin.math.abs
+import kotlin.math.ceil
 
 class PricingHandler {
 
@@ -22,10 +24,10 @@ class PricingHandler {
 
     private fun computeQuote(id: String): Double {
         val basePrice = id.hashCode().toByte().toDouble()
-        val positivePrice = Math.abs(basePrice)
+        val positivePrice = abs(basePrice)
         val jitter = Math.random() / 4 + 1
         val adjustedPrice = positivePrice * jitter
-        val finalPrice = Math.ceil(adjustedPrice)
+        val finalPrice = ceil(adjustedPrice)
         println("Price for product $id is $finalPrice")
         return finalPrice
     }
